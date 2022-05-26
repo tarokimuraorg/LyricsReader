@@ -6,8 +6,15 @@ class GetLyrics:
 
     def __init__(self, artist : str, title : str):
 
-        self.__artist = urllib.parse.quote(artist)
-        self.__title = urllib.parse.quote(title)
+        self.__artist = artist.strip()
+        self.__artist = self.__artist.replace(' ', '+')
+        self.__artist = self.__artist.replace('　', '+')
+        self.__artist = urllib.parse.quote(self.__artist)
+
+        self.__title = title.strip()
+        self.__title = self.__title.replace(' ', '+')
+        self.__title = self.__title.replace('　', '+')
+        self.__title = urllib.parse.quote(self.__title)
 
     def text(self) -> str:
         

@@ -9,8 +9,9 @@ class WriteLyrics:
         self.__lyrics = ''
 
         out_path = path.strip()
+        out_lyrics = lyrics.strip()
 
-        if out_path:
+        if out_path and out_lyrics:
 
             out_path = re.sub('　+', ' ', out_path)
             out_path = re.sub(' +', '_', out_path)
@@ -19,10 +20,6 @@ class WriteLyrics:
                 self.__path = '{}.txt'.format(out_path)
 
             self.__path = out_path
-
-        out_lyrics = lyrics.strip()
-
-        if out_lyrics:
             self.__lyrics = lyrics
 
         self.__emcreator = ErrorMessageCreator()
@@ -49,6 +46,6 @@ class WriteLyrics:
             return False
 
         except ValueError as e:
-            
+
             print('{}'.format(e))
             return False

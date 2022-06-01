@@ -3,36 +3,52 @@ from ErrorMessageCreator import ErrorMessageCreator
 
 class WriteLyrics:
 
-    def __init__(self, lyrics : str, file_name : str):
-        
-        out_file_name = file_name.strip()
+    def __init__(self, lyrics : str, path : str):
 
-        if out_file_name:
-            out_file_name = 'no_title.txt'
+        self.__path = ''
+        self.__lyrics = ''
 
-        else:
+        out_path = path.strip()
 
-            out_file_name = re.sub('　+', ' ', out_file_name)
-            out_file_name = re.sub(' +', '_', out_file_name)
+        if out_path:
 
-            if re.search('.txt$', out_file_name) is None:
-                out_file_name = '{}.txt'.format(out_file_name)
+            out_path = re.sub('　+', ' ', out_path)
+            out_path = re.sub(' +', '_', out_path)
 
-        self.__file_name = out_file_name
-        self.__lyrics = lyrics
+            if re.search('.txt$', out_path) is None:
+                self.__path = '{}.txt'.format(out_path)
+
+            self.__path = out_path
+
+        out_lyrics = lyrics.strip()
+
+        if out_lyrics:
+            self.__lyrics = lyrics
+
         self.__emcreator = ErrorMessageCreator()
 
     def onTextFile(self) -> bool:
 
         try:
 
-            with open(self.__file_name, 'x', encoding='UTF-8') as f:
-                f.write(self.__lyrics)
-                f.close()
+            if self.__path and self.__lyrics:
+
+                with open(self.__path, 'x', encoding='UTF-8') as f:
+
+                    f.write(self.__lyrics)
+                    f.close()
             
-            return True
+                return True
+
+            else:
+                raise ValueError(self.__emcreator.message('WriteLyrics','init','引数エラー','出力するテキストファイルのパス または 歌詞が入力されていません。'))
 
         except FileExistsError as e:
 
             print(self.__emcreator.message('WriteLyrics','onTextFile','書き込みエラー','指定したファイル名はすでに存在しています。'))
+            return False
+
+        except ValueError as e:
+            
+            print('{}'.format(e))
             return False

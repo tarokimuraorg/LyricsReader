@@ -9,27 +9,49 @@ class GetLyrics:
 
     def __init__(self, artist : str, title : str):
 
+        self.url = ''
+
         out_artist = artist.strip()
         out_title = title.strip()
 
         strconvertor = StringConvertor()
 
-        self.__emcreator = ErrorMessageCreator()
-        self.url = ''
-
         if out_artist and out_title:
             
             out_artist = strconvertor.toHankaku(out_artist)
-            out_artist = out_artist.replace('.','&#46;')
+            out_artist = out_artist.replace('.',' ')
+            out_artist = out_artist.replace('!', ' ')
+            out_artist = out_artist.replace('！', ' ')
+            out_artist = out_artist.replace('。', ' ')
+            out_artist = out_artist.replace('、', ' ')
+            out_artist = out_artist.replace(',', ' ')
             out_artist = re.sub('　+',' ',out_artist)
             out_artist = re.sub(' +',' ',out_artist)
-            out_artist = urllib.parse.quote(out_artist)
+            out_artist = out_artist.strip()
+            
+            list_artist = out_artist.split(' ')
+            list_artist = list(map(lambda a: urllib.parse.quote(a), list_artist))
+
+            out_artist = '+'.join(list_artist)
+            #out_artist = urllib.parse.quote(out_artist)
 
             out_title = strconvertor.toHankaku(out_title)
-            out_title = out_title.replace('.','&#46;')
+            out_title = out_title.replace('.',' ')
+            out_title = out_title.replace('!', ' ')
+            out_title = out_title.replace('！', ' ')
+            out_title = out_title.replace('。', ' ')
+            out_title = out_title.replace('、', ' ')
+            out_title = out_title.replace(',', ' ')
             out_title = re.sub('　+',' ',out_title)
             out_title = re.sub(' +',' ',out_title)
-            out_title = urllib.parse.quote(out_title)
+            out_title = out_title.strip()
+
+            list_title = out_title.split(' ')
+            list_title = list(map(lambda t: urllib.parse.quote(t), list_title))
+
+            out_title = '+'.join(list_title)
+
+            #out_title = urllib.parse.quote(out_title)
 
             url = 'https://www.google.com/search?q='
             url = url + urllib.parse.quote('歌詞')
@@ -39,6 +61,8 @@ class GetLyrics:
             url = url + out_title
 
             self.url = url
+
+        self.__emcreator = ErrorMessageCreator()
 
     def text(self) -> str:
 

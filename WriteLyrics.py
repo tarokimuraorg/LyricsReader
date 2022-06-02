@@ -13,14 +13,18 @@ class WriteLyrics:
 
         if out_path and out_lyrics:
 
-            out_path = re.sub('　+', ' ', out_path)
-            out_path = re.sub(' +', '_', out_path)
+            out_path = out_path.replace('?', ' ')
+            out_path = out_path.replace('？', ' ')
+            out_path = out_path.replace('　', ' ')
 
-            if re.search('.txt$', out_path) is None:
-                self.__path = '{}.txt'.format(out_path)
+            out_path = re.sub('.\w+$', '', out_path)
+            out_path = out_path.strip()
+            out_path = re.sub(' +', '_', out_path)
+            
+            out_path = '{}.txt'.format(out_path)
 
             self.__path = out_path
-            self.__lyrics = lyrics
+            self.__lyrics = out_lyrics
 
         self.__emcreator = ErrorMessageCreator()
 

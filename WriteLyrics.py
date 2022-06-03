@@ -16,15 +16,26 @@ class WriteLyrics:
             out_path = out_path.replace('?', ' ')
             out_path = out_path.replace('？', ' ')
             out_path = out_path.replace('　', ' ')
-
+            out_path = out_path.replace('、', ' ')
+            out_path = out_path.replace(',', ' ')
+            out_path = out_path.replace('(', ' ')
+            out_path = out_path.replace(')', ' ')
+            out_path = out_path.replace('（', ' ')
+            out_path = out_path.replace('）', ' ')
+            out_path = out_path.replace('!', ' ')
+            out_path = out_path.replace('！', ' ')
+            out_path = out_path.replace('。', ' ')
+            out_path = out_path.replace('～', ' ')
+            out_path = out_path.replace('~', ' ')
+            out_path = out_path.replace('.', ' ')
             out_path = out_path.strip()
-            
-            if re.search('.txt$', out_path) is None:
-                out_path = '{}.txt'.format(out_path)
-            else:
-                out_path = re.sub(' .txt$', '.txt', out_path)
 
             out_path = re.sub(' +', '_', out_path)
+            
+            if re.search('_txt$', out_path) is None:
+                out_path = '{}.txt'.format(out_path)
+            else:
+                out_path = re.sub('_txt$', '.txt', out_path)
 
             self.__path = out_path
             self.__lyrics = out_lyrics

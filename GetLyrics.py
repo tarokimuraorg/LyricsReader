@@ -31,7 +31,9 @@ class GetLyrics:
             out_artist = out_artist.replace('（', ' ')
             out_artist = out_artist.replace('）', ' ')
             out_artist = out_artist.replace('・', ' ')
-            out_artist = re.sub('　+',' ',out_artist)
+            out_artist = out_artist.replace('　', ' ')
+            out_artist = out_artist.replace('?', ' ')
+            out_artist = out_artist.replace('？', ' ')
             out_artist = re.sub(' +',' ',out_artist)
             out_artist = strconvertor.toHankaku(out_artist)
             out_artist = out_artist.strip()
@@ -40,8 +42,7 @@ class GetLyrics:
             list_artist = list(map(lambda a: urllib.parse.quote(a), list_artist))
 
             out_artist = '+'.join(list_artist)
-            #out_artist = urllib.parse.quote(out_artist)
-
+            
             out_title = out_title.replace('.',' ')
             out_title = out_title.replace('!', ' ')
             out_title = out_title.replace('！', ' ')
@@ -55,7 +56,9 @@ class GetLyrics:
             out_title = out_title.replace('（', ' ')
             out_title = out_title.replace('）', ' ')
             out_title = out_title.replace('・', ' ')
-            out_title = re.sub('　+',' ',out_title)
+            out_title = out_title.replace('　',' ')
+            out_title = out_title.replace('?', ' ')
+            out_title = out_title.replace('？', ' ')
             out_title = re.sub(' +',' ',out_title)
             out_title = strconvertor.toHankaku(out_title)
             out_title = out_title.strip()
@@ -64,8 +67,6 @@ class GetLyrics:
             list_title = list(map(lambda t: urllib.parse.quote(t), list_title))
 
             out_title = '+'.join(list_title)
-
-            #out_title = urllib.parse.quote(out_title)
 
             url = 'https://www.google.com/search?q='
             url = url + urllib.parse.quote('歌詞')
@@ -81,6 +82,7 @@ class GetLyrics:
     def text(self) -> str:
 
         try:
+
             if self.url:
 
                 response = requests.get(self.url)
@@ -107,6 +109,8 @@ class GetLyrics:
 
         except requests.exceptions.RequestException:
             print('{}'.format(self.__emcreator.message('GetLyrics','text','通信エラー','データの取得に失敗しました。')))
-        
+            return ''
+            
         except ValueError as e:
             print('{}'.format(e))
+            return ''

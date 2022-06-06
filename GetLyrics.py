@@ -90,13 +90,23 @@ class GetLyrics:
                 response.encoding = response.apparent_encoding
 
                 soup = BeautifulSoup(response.text, 'html.parser')
-                data = soup.find_all('div',class_='hwc')
+                
+                data1 = soup.find_all('div', class_='hwc')
 
                 result = ''
 
-                for d in data:
-                    result += d.text
+                for d1 in data1:
+                    result += d1.text
+                    result += '\n'
 
+                result = result.strip()
+
+                if result:
+                    return result.strip()
+
+                data2 = soup.find('div', class_='BNeawe tAd8D AP7Wnd')
+
+                result = data2.text
                 result = result.strip()
 
                 if result:

@@ -2,7 +2,6 @@ from turtle import title
 from GetLyrics import GetLyrics
 from WriteLyrics import WriteLyrics
 
-lyrics = ''
 artist = '竹原ピストル'
 
 #title = 'たった二種類の金魚鉢'
@@ -36,7 +35,13 @@ artist = '竹原ピストル'
 #title = 'Float Like a Buttrefly, Sting Like a Bee!!'
 #title = 'へっちゃらさ、ベイビー'
 #title = '藍色のハンカチ '
-title = ''
+#title = '虹は待つな 橋をかけろ'
+#title = 'ぼくは限りない～One for the show～'
+#title = 'マスター、ポーグスかけてくれ'
+#title = 'ママさんそう言った ～Hokkaido days～'
+#title = 'みんな～、やってるか!'
+#title = 'よー、そこの若いの' --- 歌詞以外の文字列が混入
+title = 'LIVE IN 和歌山'
 
 objlyrics = GetLyrics(artist,title)
 
@@ -59,4 +64,6 @@ if lyrics:
     """
     
     if WriteLyrics(lyrics, 'lyrics/{}.txt'.format(title)).onTextFile():
-        print('歌詞をテキストファイルに書き込みました。')
+        print('歌詞 : {} をテキストファイルに書き込みました。'.format(title))
+    else:
+        print('テキストファイルの出力に失敗しました。（歌詞 : {}）'.format(title))

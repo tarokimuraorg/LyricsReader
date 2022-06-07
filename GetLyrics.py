@@ -106,13 +106,20 @@ class GetLyrics:
 
                 data = soup.find_all('div', class_='BNeawe tAd8D AP7Wnd')
 
+                line = ''
                 result = ''
 
+                arr_result = []
+                arr_line = []
+                
                 for d in data:
-                    result += d.text.strip()
-                    result += '\n'
 
-                result = result.strip()
+                    line = d.text.strip()
+                    arr_line = line.split('\n')
+                    
+                    if len(arr_result) < len(arr_line):
+                        result = line
+                        arr_result = arr_line
                     
                 if result:
                     return result

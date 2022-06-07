@@ -104,28 +104,16 @@ class GetLyrics:
                 if result:
                     return result.strip()
 
-                data = soup.find_all('div', class_='kCrYT')
-
-                line = ''
-
-                for d in data:
-                    line += d.text
-                    line += '\n'
-
-                lines = line.split('\n')
+                data = soup.find_all('div', class_='BNeawe tAd8D AP7Wnd')
 
                 result = ''
 
-                for L in lines:
-
-                    stripedL = L.strip()
-
-                    if stripedL[0:3] == '提供元':
-                        break
-
-                    result += stripedL
+                for d in data:
+                    result += d.text.strip()
                     result += '\n'
 
+                result = result.strip()
+                    
                 if result:
                     return result
             

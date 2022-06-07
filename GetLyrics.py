@@ -91,12 +91,12 @@ class GetLyrics:
 
                 soup = BeautifulSoup(response.text, 'html.parser')
                 
-                data1 = soup.find_all('div', class_='hwc')
+                data = soup.find_all('div', class_='hwc')
 
                 result = ''
 
-                for d1 in data1:
-                    result += d1.text
+                for d in data:
+                    result += d.text
                     result += '\n'
 
                 result = result.strip()
@@ -104,13 +104,30 @@ class GetLyrics:
                 if result:
                     return result.strip()
 
-                data2 = soup.find('div', class_='BNeawe tAd8D AP7Wnd')
+                data = soup.find_all('div', class_='kCrYT')
 
-                result = data2.text
-                result = result.strip()
+                line = ''
+
+                for d in data:
+                    line += d.text
+                    line += '\n'
+
+                lines = line.split('\n')
+
+                result = ''
+
+                for L in lines:
+
+                    stripedL = L.strip()
+
+                    if stripedL[0:3] == '提供元':
+                        break
+
+                    result += stripedL
+                    result += '\n'
 
                 if result:
-                    return result.strip()
+                    return result
             
                 raise ValueError(self.__emcreator.message('GetLyrics','text','取得エラー','取得したデータが空です。'))
 

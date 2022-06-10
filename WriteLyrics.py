@@ -28,6 +28,7 @@ class WriteLyrics:
             out_path = out_path.replace('～', ' ')
             out_path = out_path.replace('~', ' ')
             out_path = out_path.replace('.', ' ')
+            out_path = out_path.replace('・', ' ')
             out_path = out_path.strip()
 
             out_path = re.sub(' +', '_', out_path)
